@@ -403,10 +403,12 @@ func GetDNSConfig() (*tailcfg.DNSConfig, string) {
 
 			dnsConfig.Nameservers = nameservers
 
-			if overrideLocalDNS {
+			if (overrideLocalDNS) {
 				dnsConfig.Resolvers = resolvers
 			} else {
-				dnsConfig.FallbackResolvers = resolvers
+				dnsConfig.Routes = make(map[string][]*dnstype.Resolver)
+				dnsConfig.Routes["peer.symentis.com."] = make([]*dnstype.Resolver, 0)
+				// dnsConfig.FallbackResolvers = resolvers
 			}
 		}
 
